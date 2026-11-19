@@ -1,11 +1,9 @@
-import "dotenv/config"; // `.env.local` の環境変数を読み込む
+import "dotenv/config";
 import fetch from "node-fetch";
-
 
 const addUser = async (username) => {
     const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/userTable`;
-    const id = Math.floor(Math.random() * 1000000); // 仮の一意ID
-
+    const id = Math.floor(Math.random() * 1000000);
 
     await fetch(url, {
         method: "POST",
@@ -16,8 +14,8 @@ const addUser = async (username) => {
         },
         body: JSON.stringify({ id, username })
     });
+    console.log(`ユーザー「${username}」を追加しました`); // ← 追加
 };
-
 
 const updateUser = async (id, newUsername) => {
     const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/userTable?id=eq.${id}`;
@@ -31,8 +29,8 @@ const updateUser = async (id, newUsername) => {
         },
         body: JSON.stringify({ username: newUsername })
     });
+    console.log(`ユーザーID ${id} を「${newUsername}」に更新しました`); // ← 追加
 };
-
 
 const deleteUser = async (id) => {
     const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/userTable?id=eq.${id}`;
@@ -44,12 +42,8 @@ const deleteUser = async (id) => {
             Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
         },
     });
-
     console.log(`ユーザーID ${id} を削除しました`);
 };
 
-
-deleteUser(3)
-
-
+deleteUser(746390).then(() => console.log("完了しました"));
 
